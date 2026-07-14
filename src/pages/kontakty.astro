@@ -1,5 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getEntry } from 'astro:content';
+
+const site = (await getEntry('settings', 'site'))?.data;
 ---
 
 <BaseLayout title="Контакты и пожертвования">
@@ -7,10 +10,42 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <div class="container">
       <h1>Контакты и пожертвования</h1>
       <div class="ornament"><span></span></div>
-      <p class="lead">
-        Здесь будут адрес, карта проезда, телефон и реквизиты для пожертвований.
-        Настоящие данные возьмём у настоятеля.
-      </p>
+
+      <div class="contacts-layout">
+        <div class="contacts-info">
+          <h2>Как нас найти</h2>
+          <dl class="contact-list">
+            <div class="contact-row">
+              <dt>Адрес</dt>
+              <dd>{site?.address ?? '—'}</dd>
+            </div>
+            <div class="contact-row">
+              <dt>Телефон</dt>
+              <dd>{site?.phone ?? '—'}</dd>
+            </div>
+            <div class="contact-row">
+              <dt>Эл. почта</dt>
+              <dd>{site?.email ?? '—'}</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="contacts-map">
+          {site?.mapEmbed ? (
+            <div set:html={site.mapEmbed} />
+          ) : (
+            <div class="map-placeholder">
+              <span class="placeholder">[УТОЧНИТЬ: карта проезда]</span>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div class="donations card">
+        <h2>Пожертвования</h2>
+        <p>Храм существует и благоукрашается на пожертвования прихожан. Благодарим за вашу помощь.</p>
+        {site?.requisites && <pre class="requisites">{site.requisites}</pre>}
+      </div>
     </div>
   </section>
 </BaseLayout>

@@ -1,5 +1,8 @@
 ---
 import OrthodoxCross from './OrthodoxCross.astro';
+import { getEntry } from 'astro:content';
+
+const site = (await getEntry('settings', 'site'))?.data;
 
 const links = [
   { href: '/', label: 'Главная' },
@@ -17,16 +20,16 @@ const year = new Date().getFullYear();
     <div class="footer-col">
       <div class="footer-brand">
         <span class="brand-emblem"><OrthodoxCross /></span>
-        <span class="brand-name">[УТОЧНИТЬ: название храма]</span>
+        <span class="brand-name">{site?.name ?? 'Храм'}</span>
       </div>
-      <p>[УТОЧНИТЬ: короткое приветствие или девиз храма]</p>
+      {site?.welcome && <p>{site.welcome}</p>}
     </div>
 
     <div class="footer-col">
       <h3>Контакты</h3>
-      <p>Адрес: <span class="placeholder">[УТОЧНИТЬ: адрес]</span></p>
-      <p>Телефон: <span class="placeholder">[УТОЧНИТЬ: телефон]</span></p>
-      <p>Эл. почта: <span class="placeholder">[УТОЧНИТЬ: email]</span></p>
+      {site?.address && <p>Адрес: {site.address}</p>}
+      {site?.phone && <p>Телефон: {site.phone}</p>}
+      {site?.email && <p>Эл. почта: {site.email}</p>}
     </div>
 
     <div class="footer-col">
@@ -41,7 +44,7 @@ const year = new Date().getFullYear();
 
   <div class="footer-bottom">
     <div class="container">
-      © {year} [УТОЧНИТЬ: название храма]
+      © {year} {site?.name ?? 'Храм'}
     </div>
   </div>
 </footer>

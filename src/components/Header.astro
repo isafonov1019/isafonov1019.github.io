@@ -1,5 +1,9 @@
 ---
 import OrthodoxCross from './OrthodoxCross.astro';
+import { getEntry } from 'astro:content';
+
+// Название и подпись берём из общих настроек (settings/site.md)
+const site = (await getEntry('settings', 'site'))?.data;
 
 // Пункты меню. Адреса страниц — латиницей (так правильнее для ссылок),
 // названия для людей — по-русски.
@@ -22,8 +26,8 @@ const isActive = (href: string) =>
     <a class="brand" href="/">
       <span class="brand-emblem"><OrthodoxCross /></span>
       <span class="brand-text">
-        <span class="brand-name">[УТОЧНИТЬ: название храма]</span>
-        <span class="brand-sub">[УТОЧНИТЬ: подпись под названием]</span>
+        <span class="brand-name">{site?.name ?? 'Храм'}</span>
+        {site?.subtitle && <span class="brand-sub">{site.subtitle}</span>}
       </span>
     </a>
 

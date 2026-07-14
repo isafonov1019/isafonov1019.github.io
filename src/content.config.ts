@@ -46,4 +46,57 @@ const news = defineCollection({
   }),
 });
 
-export const collections = { services, news };
+// --- Духовенство ---
+// Один файл = один священнослужитель. Биография — в теле файла.
+const clergy = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/clergy' }),
+  schema: z.object({
+    name: z.string(),
+    // Сан / должность (например: «настоятель, протоиерей»)
+    rank: z.string().optional(),
+    // Фотография (необязательно) — путь вида /images/clergy/...
+    photo: z.string().optional(),
+    // Порядок вывода (меньше — выше)
+    order: z.number().default(100),
+  }),
+});
+
+// --- Фотогалерея ---
+const gallery = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/gallery' }),
+  schema: z.object({
+    image: z.string().optional(),
+    caption: z.string().optional(),
+    order: z.number().default(100),
+  }),
+});
+
+// --- Редактируемые тексты страниц ---
+// Например, история храма (id: "istoriya"). Текст — в теле файла (Markdown).
+const pages = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/pages' }),
+  schema: z.object({
+    title: z.string().optional(),
+  }),
+});
+
+// --- Общие настройки храма (один файл: settings/site.md) ---
+// Название, адрес, телефон и т. п. — меняются в одном месте,
+// подставляются по всему сайту.
+const settings = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/settings' }),
+  schema: z.object({
+    name: z.string(),
+    subtitle: z.string().optional(),
+    welcome: z.string().optional(),
+    address: z.string().optional(),
+    phone: z.string().optional(),
+    email: z.string().optional(),
+    // Реквизиты для пожертвований (можно в несколько строк)
+    requisites: z.string().optional(),
+    // Код карты (iframe) или ссылка — необязательно
+    mapEmbed: z.string().optional(),
+  }),
+});
+
+export const collections = { services, news, clergy, gallery, pages, settings };

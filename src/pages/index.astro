@@ -1,6 +1,29 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import OrthodoxCross from '../components/OrthodoxCross.astro';
+import { getCollection, getEntry } from 'astro:content';
+
+const site = (await getEntry('settings', 'site'))?.data;
+
+// Ближайшее богослужение: первый сегодняшний/будущий день с расписания
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+const nextDay = (await getCollection('services'))
+  .filter((e) => e.data.date >= today)
+  .sort((a, b) => a.data.date.getTime() - b.data.date.getTime())[0];
+
+const dateFmt = new Intl.DateTimeFormat('ru-RU', {
+  weekday: 'long',
+  day: 'numeric',
+  month: 'long',
+});
+const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+const nextService = nextDay
+  ? {
+      date: capitalize(dateFmt.format(nextDay.data.date)),
+      first: nextDay.data.services[0],
+    }
+  : null;
 ---
 
 <BaseLayout>
@@ -10,13 +33,10 @@ import OrthodoxCross from '../components/OrthodoxCross.astro';
       <span class="hero-emblem"><OrthodoxCross /></span>
       <h1>
         Добро пожаловать<br />
-        <span class="hero-name">[УТОЧНИТЬ: название храма]</span>
+        <span class="hero-name">{site?.name ?? 'Храм'}</span>
       </h1>
       <div class="ornament"><span></span></div>
-      <p class="lead">
-        [УТОЧНИТЬ: короткое приветственное слово настоятеля или описание храма
-        в 1–2 предложениях]
-      </p>
+      {site?.welcome && <p class="lead">{site.welcome}</p>}
       <div class="hero-actions">
         <a class="btn btn-primary" href="/raspisanie">Расписание богослужений</a>
         <a class="btn btn-outline" href="/kontakty">Как добраться</a>
@@ -29,15 +49,23 @@ import OrthodoxCross from '../components/OrthodoxCross.astro';
     <div class="info-cards">
       <div class="card info-card">
         <h3>Ближайшее богослужение</h3>
-        <p><span class="placeholder">[УТОЧНИТЬ: дата и время]</span></p>
+        {nextService ? (
+          <p>
+            <strong>{nextService.date}</strong><br />
+            {nextService.first ? `${nextService.first.time} — ${nextService.first.name}` : ''}
+          </p>
+        ) : (
+          <p><span class="placeholder">[УТОЧНИТЬ: расписание]</span></p>
+        )}
+        <p><a href="/raspisanie">Всё расписание →</a></p>
       </div>
       <div class="card info-card">
         <h3>Адрес</h3>
-        <p><span class="placeholder">[УТОЧНИТЬ: адрес храма]</span></p>
+        <p>{site?.address ?? '—'}</p>
       </div>
       <div class="card info-card">
         <h3>Телефон</h3>
-        <p><span class="placeholder">[УТОЧНИТЬ: телефон]</span></p>
+        <p>{site?.phone ?? '—'}</p>
       </div>
     </div>
   </div>

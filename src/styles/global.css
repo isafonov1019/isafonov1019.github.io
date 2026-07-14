@@ -591,6 +591,124 @@ img { max-width: 100%; height: auto; display: block; }
 .article-body img { border-radius: var(--radius); margin: 1.5rem 0; }
 
 /* =========================================================
+   О ХРАМЕ: духовенство и галерея
+   ========================================================= */
+
+/* Чередующийся фон секции */
+.section-alt { background: #f1e9db; border-block: 1px solid var(--color-border); }
+
+.clergy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+.clergy-card { display: flex; gap: 1.1rem; align-items: flex-start; }
+.clergy-photo {
+  flex-shrink: 0;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #efe6d6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.clergy-photo img { width: 100%; height: 100%; object-fit: cover; }
+.clergy-photo-placeholder { color: var(--color-accent); }
+.clergy-photo-placeholder svg { width: 28px; height: 42px; }
+.clergy-info h3 { margin: 0 0 0.15rem; color: var(--color-primary); }
+.clergy-rank { margin: 0 0 0.5rem; color: var(--color-accent); font-weight: 600; }
+.clergy-bio { color: var(--color-text-muted); font-size: 1rem; }
+.clergy-bio p:last-child { margin-bottom: 0; }
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+.gallery-item { margin: 0; }
+.gallery-item img,
+.gallery-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius);
+  object-fit: cover;
+  background: #efe6d6;
+  border: 1px solid var(--color-border);
+}
+.gallery-placeholder { color: var(--color-accent); }
+.gallery-placeholder svg { width: 36px; height: 54px; }
+.gallery-item figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+/* =========================================================
+   КОНТАКТЫ И ПОЖЕРТВОВАНИЯ
+   ========================================================= */
+
+.contacts-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+  margin-bottom: 2.5rem;
+}
+.contact-list { margin: 0; }
+.contact-row {
+  display: flex;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-top: 1px solid var(--color-border);
+}
+.contact-row:first-child { border-top: none; }
+.contact-row dt {
+  flex-shrink: 0;
+  min-width: 7rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+.contact-row dd { margin: 0; }
+
+.map-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 260px;
+  background: #efe6d6;
+  border: 1px dashed var(--color-accent);
+  border-radius: var(--radius);
+}
+.contacts-map iframe {
+  width: 100%;
+  min-height: 320px;
+  border: 0;
+  border-radius: var(--radius);
+}
+
+.donations { max-width: 760px; }
+.requisites {
+  font-family: var(--font-body);
+  white-space: pre-wrap;
+  background: #faf5ea;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  margin: 0.5rem 0 0;
+  font-size: 1.02rem;
+}
+
+@media (max-width: 720px) {
+  .contacts-layout { grid-template-columns: 1fr; }
+}
+
+/* =========================================================
    ДОСТУПНОСТЬ: меньше анимаций, если пользователь так настроил
    ========================================================= */
 @media (prefers-reduced-motion: reduce) {

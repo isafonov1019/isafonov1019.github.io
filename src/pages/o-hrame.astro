@@ -1,5 +1,21 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import OrthodoxCross from '../components/OrthodoxCross.astro';
+import { getCollection, getEntry, render } from 'astro:content';
+
+// История храма (редактируемый текст)
+const history = await getEntry('pages', 'istoriya');
+const HistoryContent = history ? (await render(history)).Content : null;
+
+// Духовенство — по порядку
+const clergy = (await getCollection('clergy')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+// Фотогалерея — по порядку
+const gallery = (await getCollection('gallery')).sort(
+  (a, b) => a.data.order - b.data.order
+);
 ---
 
 <BaseLayout title="О храме и история">
@@ -7,10 +23,61 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <div class="container">
       <h1>О храме и его история</h1>
       <div class="ornament"><span></span></div>
-      <p class="lead">
-        Здесь разместим историю храма, сведения о духовенстве и фотогалерею.
-        Настоящие тексты и фотографии возьмём у настоятеля.
-      </p>
+
+      <div class="article-body" style="max-width: 760px;">
+        {HistoryContent ? <HistoryContent /> : <p>Текст скоро появится.</p>}
+      </div>
     </div>
   </section>
+
+  {clergy.length > 0 && (
+    <section class="section section-alt">
+      <div class="container">
+        <h2>Духовенство</h2>
+        <div class="ornament"><span></span></div>
+        <div class="clergy-grid">
+          {clergy.map(async (person) => {
+            const { Content } = await render(person);
+            return (
+              <article class="clergy-card card">
+                <div class="clergy-photo">
+                  {person.data.photo ? (
+                    <img src={person.data.photo} alt={person.data.name} loading="lazy" />
+                  ) : (
+                    <span class="clergy-photo-placeholder"><OrthodoxCross /></span>
+                  )}
+                </div>
+                <div class="clergy-info">
+                  <h3>{person.data.name}</h3>
+                  {person.data.rank && <p class="clergy-rank">{person.data.rank}</p>}
+                  <div class="clergy-bio"><Content /></div>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {gallery.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <h2>Фотогалерея</h2>
+        <div class="ornament"><span></span></div>
+        <div class="gallery-grid">
+          {gallery.map((item) => (
+            <figure class="gallery-item">
+              {item.data.image ? (
+                <img src={item.data.image} alt={item.data.caption ?? ''} loading="lazy" />
+              ) : (
+                <span class="gallery-placeholder"><OrthodoxCross /></span>
+              )}
+              {item.data.caption && <figcaption>{item.data.caption}</figcaption>}
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
 </BaseLayout>
