@@ -1,5 +1,28 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+// Берём все дни расписания и сортируем по дате (от ранних к поздним)
+const all = (await getCollection('services')).sort(
+  (a, b) => a.data.date.getTime() - b.data.date.getTime()
+);
+
+// Показываем только сегодняшние и будущие дни. Если таких нет — показываем всё.
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+const upcoming = all.filter((e) => e.data.date >= today);
+const days = upcoming.length > 0 ? upcoming : all;
+
+// Формат даты по-русски: «воскресенье, 19 июля» → с заглавной буквы
+const dateFmt = new Intl.DateTimeFormat('ru-RU', {
+  weekday: 'long',
+  day: 'numeric',
+  month: 'long',
+});
+const formatDay = (d: Date) => {
+  const s = dateFmt.format(d);
+  return s.charAt(0).toUpperCase() + s.slice(1);
+};
 ---
 
 <BaseLayout title="Расписание богослужений">
@@ -7,10 +30,34 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <div class="container">
       <h1>Расписание богослужений</h1>
       <div class="ornament"><span></span></div>
-      <p class="lead">
-        Здесь будет расписание служб. Настоятель сможет обновлять его сам через
-        админку — это добавим на следующих этапах.
-      </p>
+
+      {days.length === 0 ? (
+        <p class="lead">Расписание пока не заполнено.</p>
+      ) : (
+        <div class="schedule">
+          {days.map((day) => (
+            <article class="schedule-day card">
+              <header class="schedule-day-head">
+                <h2>{formatDay(day.data.date)}</h2>
+                {day.data.title && <p class="schedule-day-title">{day.data.title}</p>}
+              </header>
+
+              {day.data.note && (
+                <p class="schedule-note">{day.data.note}</p>
+              )}
+
+              <ul class="service-list">
+                {day.data.services.map((s) => (
+                  <li class="service-row">
+                    <span class="service-time">{s.time}</span>
+                    <span class="service-name">{s.name}</span>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      )}
     </div>
   </section>
 </BaseLayout>

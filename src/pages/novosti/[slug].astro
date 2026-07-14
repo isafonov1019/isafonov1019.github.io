@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+// Создаём отдельную страницу для каждой новости
+export async function getStaticPaths() {
+  const posts = await getCollection('news');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const dateFmt = new Intl.DateTimeFormat('ru-RU', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+<BaseLayout title={post.data.title} description={post.data.summary}>
+  <section class="section">
+    <div class="container">
+      <p class="back-link"><a href="/novosti">← Ко всем новостям</a></p>
+
+      <article class="article">
+        <time class="news-date" datetime={post.data.date.toISOString()}>
+          {dateFmt.format(post.data.date)}
+        </time>
+        <h1>{post.data.title}</h1>
+        <div class="ornament"><span></span></div>
+
+        {post.data.image && (
+          <img class="article-image" src={post.data.image} alt={post.data.title} />
+        )}
+
+        <div class="article-body">
+          <Content />
+        </div>
+      </article>
+    </div>
+  </section>
+</BaseLayout>

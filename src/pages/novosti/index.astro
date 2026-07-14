@@ -1,5 +1,17 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+// Берём опубликованные новости, сортируем от новых к старым
+const posts = (await getCollection('news', ({ data }) => data.published !== false)).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+
+const dateFmt = new Intl.DateTimeFormat('ru-RU', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
 ---
 
 <BaseLayout title="Новости и объявления">
@@ -7,10 +19,32 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <div class="container">
       <h1>Новости и объявления</h1>
       <div class="ornament"><span></span></div>
-      <p class="lead">
-        Здесь будут новости прихода и объявления. Настоятель сможет добавлять их
-        сам через админку — это добавим на следующих этапах.
-      </p>
+
+      {posts.length === 0 ? (
+        <p class="lead">Пока новостей нет.</p>
+      ) : (
+        <div class="news-grid">
+          {posts.map((post) => (
+            <article class="news-card card">
+              {post.data.image && (
+                <a href={`/novosti/${post.id}`} class="news-card-image">
+                  <img src={post.data.image} alt={post.data.title} loading="lazy" />
+                </a>
+              )}
+              <div class="news-card-body">
+                <time class="news-date" datetime={post.data.date.toISOString()}>
+                  {dateFmt.format(post.data.date)}
+                </time>
+                <h2 class="news-card-title">
+                  <a href={`/novosti/${post.id}`}>{post.data.title}</a>
+                </h2>
+                {post.data.summary && <p class="news-summary">{post.data.summary}</p>}
+                <a class="news-more" href={`/novosti/${post.id}`}>Читать полностью →</a>
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
     </div>
   </section>
 </BaseLayout>
