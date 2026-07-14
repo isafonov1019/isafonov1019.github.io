@@ -1,0 +1,15 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Astro dev server",
+      "runtimeExecutable": "/Users/gety/.local/node/bin/node",
+      "runtimeArgs": [
+        "/Users/gety/Desktop/Claude Website/node_modules/astro/bin/astro.mjs",
+        "dev"
+      ],
+      "port": 4321,
+      "autoPort": false
+    }
+  ]
+}

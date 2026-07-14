@@ -1,0 +1,15 @@
+# зависимости
+node_modules/
+
+# собранный сайт
+dist/
+.astro/
+
+# локальные настройки Claude Code (личные, не для общего репозитория)
+.claude/settings.local.json
+
+# системные и локальные файлы
+.DS_Store
+.env
+.env.production
+npm-debug.log*
