@@ -1,19 +1,59 @@
 ---
-// Временная стартовая страница — просто чтобы проверить, что каркас работает.
-// На следующих этапах заменим её на настоящую Главную страницу храма.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import OrthodoxCross from '../components/OrthodoxCross.astro';
 ---
 
-<!doctype html>
-<html lang="ru">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Сайт храма — проверка</title>
-  </head>
-  <body>
-    <main style="font-family: system-ui, sans-serif; max-width: 40rem; margin: 4rem auto; padding: 0 1rem; text-align: center;">
-      <h1>Каркас сайта работает ✅</h1>
-      <p>Это временная страница. Дальше здесь появится Главная страница храма.</p>
-    </main>
-  </body>
-</html>
+<BaseLayout>
+  <!-- Приветственный экран -->
+  <section class="hero">
+    <div class="container">
+      <span class="hero-emblem"><OrthodoxCross /></span>
+      <h1>
+        Добро пожаловать<br />
+        <span class="hero-name">[УТОЧНИТЬ: название храма]</span>
+      </h1>
+      <div class="ornament"><span></span></div>
+      <p class="lead">
+        [УТОЧНИТЬ: короткое приветственное слово настоятеля или описание храма
+        в 1–2 предложениях]
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="/raspisanie">Расписание богослужений</a>
+        <a class="btn btn-outline" href="/kontakty">Как добраться</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Быстрая информация -->
+  <div class="container">
+    <div class="info-cards">
+      <div class="card info-card">
+        <h3>Ближайшее богослужение</h3>
+        <p><span class="placeholder">[УТОЧНИТЬ: дата и время]</span></p>
+      </div>
+      <div class="card info-card">
+        <h3>Адрес</h3>
+        <p><span class="placeholder">[УТОЧНИТЬ: адрес храма]</span></p>
+      </div>
+      <div class="card info-card">
+        <h3>Телефон</h3>
+        <p><span class="placeholder">[УТОЧНИТЬ: телефон]</span></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Приветственный текст -->
+  <section class="section">
+    <div class="container welcome">
+      <h2>О нашем храме</h2>
+      <div class="ornament"><span></span></div>
+      <p>
+        [УТОЧНИТЬ: несколько предложений о храме — когда основан, чем живёт
+        приход, кому посвящён престол. Настоящий текст возьмём у настоятеля.]
+      </p>
+      <p>
+        <a class="btn btn-outline" href="/o-hrame">Подробнее об истории</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

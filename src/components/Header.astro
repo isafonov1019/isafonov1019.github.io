@@ -1,0 +1,81 @@
+---
+import OrthodoxCross from './OrthodoxCross.astro';
+
+// Пункты меню. Адреса страниц — латиницей (так правильнее для ссылок),
+// названия для людей — по-русски.
+const links = [
+  { href: '/', label: 'Главная' },
+  { href: '/raspisanie', label: 'Расписание' },
+  { href: '/novosti', label: 'Новости' },
+  { href: '/o-hrame', label: 'О храме' },
+  { href: '/kontakty', label: 'Контакты' },
+];
+
+// Подсветка текущего раздела в меню
+const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const isActive = (href: string) =>
+  href === '/' ? path === '/' : path === href || path.startsWith(href + '/');
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="/">
+      <span class="brand-emblem"><OrthodoxCross /></span>
+      <span class="brand-text">
+        <span class="brand-name">[УТОЧНИТЬ: название храма]</span>
+        <span class="brand-sub">[УТОЧНИТЬ: подпись под названием]</span>
+      </span>
+    </a>
+
+    <button
+      class="nav-toggle"
+      aria-expanded="false"
+      aria-controls="site-nav"
+      aria-label="Открыть меню"
+    >
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+    </button>
+
+    <nav id="site-nav" class="site-nav" aria-label="Основное меню">
+      <ul>
+        {links.map((l) => (
+          <li>
+            <a
+              href={l.href}
+              class={isActive(l.href) ? 'active' : ''}
+              aria-current={isActive(l.href) ? 'page' : undefined}
+            >
+              {l.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  // Помечаем, что JavaScript работает — тогда включается «сворачиваемое» меню.
+  // Если JS выключен, меню остаётся полностью видимым (доступность).
+  document.documentElement.classList.add('js');
+
+  const btn = document.querySelector<HTMLButtonElement>('.nav-toggle');
+  const nav = document.getElementById('site-nav');
+
+  btn?.addEventListener('click', () => {
+    const open = nav?.classList.toggle('open') ?? false;
+    btn.setAttribute('aria-expanded', String(open));
+    btn.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+  });
+
+  // Закрываем меню после перехода по ссылке (на телефоне)
+  nav?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      nav.classList.remove('open');
+      btn?.setAttribute('aria-expanded', 'false');
+      btn?.setAttribute('aria-label', 'Открыть меню');
+    });
+  });
+</script>

@@ -1,0 +1,47 @@
+---
+import OrthodoxCross from './OrthodoxCross.astro';
+
+const links = [
+  { href: '/', label: 'Главная' },
+  { href: '/raspisanie', label: 'Расписание' },
+  { href: '/novosti', label: 'Новости' },
+  { href: '/o-hrame', label: 'О храме' },
+  { href: '/kontakty', label: 'Контакты' },
+];
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-col">
+      <div class="footer-brand">
+        <span class="brand-emblem"><OrthodoxCross /></span>
+        <span class="brand-name">[УТОЧНИТЬ: название храма]</span>
+      </div>
+      <p>[УТОЧНИТЬ: короткое приветствие или девиз храма]</p>
+    </div>
+
+    <div class="footer-col">
+      <h3>Контакты</h3>
+      <p>Адрес: <span class="placeholder">[УТОЧНИТЬ: адрес]</span></p>
+      <p>Телефон: <span class="placeholder">[УТОЧНИТЬ: телефон]</span></p>
+      <p>Эл. почта: <span class="placeholder">[УТОЧНИТЬ: email]</span></p>
+    </div>
+
+    <div class="footer-col">
+      <h3>Разделы</h3>
+      <ul class="footer-nav">
+        {links.map((l) => (
+          <li><a href={l.href}>{l.label}</a></li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container">
+      © {year} [УТОЧНИТЬ: название храма]
+    </div>
+  </div>
+</footer>

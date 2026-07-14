@@ -1,0 +1,39 @@
+---
+// Общий каркас страницы: <head>, шапка, основное содержимое и подвал.
+// Каждая страница оборачивается в этот макет и передаёт свой заголовок.
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = 'Официальный сайт православного храма: расписание богослужений, новости, история и контакты.',
+} = Astro.props;
+
+const siteName = '[УТОЧНИТЬ: название храма]';
+const fullTitle = title ? `${title} — ${siteName}` : siteName;
+---
+
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{fullTitle}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Перейти к содержанию</a>
+    <Header />
+    <main id="main" class="site-main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
