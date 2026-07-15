@@ -1,0 +1,211 @@
+# =========================================================
+#  НАСТРОЙКИ АДМИНКИ (Sveltia CMS)
+#  Здесь описано, какие разделы редактируются и какие у них поля.
+#  Из этого файла админка строит удобные формы для настоятеля.
+# =========================================================
+
+backend:
+  name: github
+  # [УТОЧНИТЬ: репозиторий на GitHub — заполним на этапе публикации]
+  repo: PLACEHOLDER/hram-site
+  branch: main
+
+# Куда сохраняются загружаемые фотографии
+media_folder: "public/images"
+# Как путь к фото выглядит на сайте
+public_folder: "/images"
+
+collections:
+  # --- Расписание богослужений ---
+  - name: services
+    label: "Расписание богослужений"
+    label_singular: "день расписания"
+    folder: "src/content/services"
+    create: true
+    delete: true
+    slug: "{{fields.date}}"
+    summary: "{{date}} — {{title}}"
+    sortable_fields: [date]
+    fields:
+      - name: date
+        label: "Дата"
+        widget: datetime
+        format: "YYYY-MM-DD"
+        date_format: "DD.MM.YYYY"
+        time_format: false
+      - name: title
+        label: "Заголовок дня (необязательно)"
+        hint: "Например: «Неделя 5-я по Пятидесятнице»"
+        widget: string
+        required: false
+      - name: note
+        label: "Примечание (необязательно)"
+        hint: "Например: «Престольный праздник»"
+        widget: string
+        required: false
+      - name: services
+        label: "Службы в этот день"
+        label_singular: "службу"
+        widget: list
+        summary: "{{fields.time}} — {{fields.name}}"
+        fields:
+          - name: time
+            label: "Время"
+            widget: string
+            hint: "Например: 08:00"
+          - name: name
+            label: "Название службы"
+            widget: string
+            hint: "Например: Божественная литургия"
+
+  # --- Новости и объявления ---
+  - name: news
+    label: "Новости и объявления"
+    label_singular: "новость"
+    folder: "src/content/news"
+    create: true
+    delete: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{date}} — {{title}}"
+    sortable_fields: [date, title]
+    fields:
+      - name: title
+        label: "Заголовок"
+        widget: string
+      - name: date
+        label: "Дата"
+        widget: datetime
+        format: "YYYY-MM-DD"
+        date_format: "DD.MM.YYYY"
+        time_format: false
+      - name: summary
+        label: "Краткое описание (для списка новостей)"
+        widget: text
+        required: false
+      - name: image
+        label: "Фотография (необязательно)"
+        widget: image
+        required: false
+      - name: published
+        label: "Показывать на сайте"
+        widget: boolean
+        default: true
+      - name: body
+        label: "Текст новости"
+        widget: markdown
+
+  # --- Духовенство ---
+  - name: clergy
+    label: "Духовенство"
+    label_singular: "священнослужителя"
+    folder: "src/content/clergy"
+    create: true
+    delete: true
+    identifier_field: name
+    summary: "{{order}}. {{name}}"
+    sortable_fields: [order, name]
+    fields:
+      - name: name
+        label: "Имя"
+        widget: string
+        hint: "Например: протоиерей Иоанн Иванов"
+      - name: rank
+        label: "Должность / сан"
+        widget: string
+        required: false
+        hint: "Например: настоятель храма"
+      - name: photo
+        label: "Фотография (необязательно)"
+        widget: image
+        required: false
+      - name: order
+        label: "Порядок (меньше — выше в списке)"
+        widget: number
+        default: 100
+        value_type: int
+      - name: body
+        label: "Краткая биография"
+        widget: markdown
+        required: false
+
+  # --- Фотогалерея ---
+  - name: gallery
+    label: "Фотогалерея"
+    label_singular: "фотографию"
+    folder: "src/content/gallery"
+    create: true
+    delete: true
+    identifier_field: caption
+    summary: "{{order}}. {{caption}}"
+    sortable_fields: [order]
+    fields:
+      - name: image
+        label: "Фотография"
+        widget: image
+        required: false
+      - name: caption
+        label: "Подпись (необязательно)"
+        widget: string
+        required: false
+      - name: order
+        label: "Порядок (меньше — раньше)"
+        widget: number
+        default: 100
+        value_type: int
+
+  # --- Тексты страниц ---
+  - name: pages
+    label: "Тексты страниц"
+    files:
+      - name: istoriya
+        label: "История храма (страница «О храме»)"
+        file: "src/content/pages/istoriya.md"
+        fields:
+          - name: title
+            label: "Заголовок"
+            widget: string
+            required: false
+          - name: body
+            label: "Текст истории"
+            widget: markdown
+
+  # --- Общие сведения о храме ---
+  - name: settings
+    label: "Сведения о храме"
+    files:
+      - name: site
+        label: "Название, контакты, реквизиты"
+        file: "src/content/settings/site.md"
+        fields:
+          - name: name
+            label: "Название храма"
+            widget: string
+          - name: subtitle
+            label: "Подпись под названием (необязательно)"
+            widget: string
+            required: false
+          - name: welcome
+            label: "Приветствие на главной (1–2 предложения)"
+            widget: text
+            required: false
+          - name: address
+            label: "Адрес"
+            widget: string
+            required: false
+          - name: phone
+            label: "Телефон"
+            widget: string
+            required: false
+          - name: email
+            label: "Эл. почта"
+            widget: string
+            required: false
+          - name: requisites
+            label: "Реквизиты для пожертвований"
+            widget: text
+            required: false
+          - name: mapEmbed
+            label: "Код карты (вставка iframe, необязательно)"
+            widget: text
+            required: false
+            hint: "Код вставки с Яндекс.Карт или Google Maps. Добавим на этапе публикации."
