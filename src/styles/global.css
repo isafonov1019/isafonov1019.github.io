@@ -434,6 +434,14 @@ img { max-width: 100%; height: auto; display: block; }
   margin-bottom: 1rem;
 }
 .hero-emblem svg { width: 56px; height: 82px; }
+.hero-kicker {
+  margin: 0 0 0.5rem;
+  color: var(--color-accent-text);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.95rem;
+}
 .hero h1 { margin-bottom: 0.4rem; }
 .hero .hero-name { color: var(--color-primary); }
 .hero-actions {

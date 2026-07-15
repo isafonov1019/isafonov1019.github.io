@@ -20,13 +20,14 @@ interface Props {
   description?: string;
 }
 
-const {
-  title,
-  description = 'Официальный сайт православного храма: расписание богослужений, новости, история и контакты.',
-} = Astro.props;
-
 const site = (await getEntry('settings', 'site'))?.data;
 const siteName = site?.name ?? 'Храм';
+
+const {
+  title,
+  description = `${siteName}${site?.subtitle ? `, ${site.subtitle}` : ''}: расписание богослужений, новости прихода, история храма, контакты и пожертвования.`,
+} = Astro.props;
+
 const fullTitle = title ? `${title} — ${siteName}` : siteName;
 ---
 

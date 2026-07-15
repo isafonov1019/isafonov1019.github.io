@@ -89,6 +89,8 @@ const settings = defineCollection({
     name: z.string(),
     subtitle: z.string().optional(),
     welcome: z.string().optional(),
+    // Короткий текст «О нашем храме» на главной странице
+    about: z.string().optional(),
     address: z.string().optional(),
     phone: z.string().optional(),
     email: z.string().optional(),

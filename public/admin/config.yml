@@ -196,6 +196,10 @@ collections:
             label: "Приветствие на главной (1–2 предложения)"
             widget: text
             required: false
+          - name: about
+            label: "Блок «О нашем храме» на главной (2–3 предложения)"
+            widget: text
+            required: false
           - name: address
             label: "Адрес"
             widget: string

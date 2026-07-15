@@ -31,10 +31,8 @@ const nextService = nextDay
   <section class="hero">
     <div class="container">
       <span class="hero-emblem"><OrthodoxCross /></span>
-      <h1>
-        Добро пожаловать<br />
-        <span class="hero-name">{site?.name ?? 'Храм'}</span>
-      </h1>
+      {site?.subtitle && <p class="hero-kicker">{site.subtitle}</p>}
+      <h1 class="hero-name">{site?.name ?? 'Храм'}</h1>
       <div class="ornament"><span></span></div>
       {site?.welcome && <p class="lead">{site.welcome}</p>}
       <div class="hero-actions">
@@ -80,10 +78,11 @@ const nextService = nextDay
     <div class="container welcome">
       <h2>О нашем храме</h2>
       <div class="ornament"><span></span></div>
-      <p>
-        [УТОЧНИТЬ: несколько предложений о храме — когда основан, чем живёт
-        приход, кому посвящён престол. Настоящий текст возьмём у настоятеля.]
-      </p>
+      {site?.about ? (
+        <p>{site.about}</p>
+      ) : (
+        <p><span class="placeholder">[УТОЧНИТЬ: короткий текст о храме]</span></p>
+      )}
       <p>
         <a class="btn btn-outline" href="/o-hrame">Подробнее об истории</a>
       </p>
