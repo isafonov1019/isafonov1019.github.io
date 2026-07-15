@@ -1,5 +1,5 @@
 # =========================================================
-#  НАСТРОЙКИ АДМИНКИ (Sveltia CMS)
+#  НАСТРОЙКИ АДМИНКИ (Decap CMS)
 #  Здесь описано, какие разделы редактируются и какие у них поля.
 #  Из этого файла админка строит удобные формы для настоятеля.
 # =========================================================
@@ -9,6 +9,14 @@ backend:
   # [УТОЧНИТЬ: репозиторий на GitHub — заполним на этапе публикации]
   repo: PLACEHOLDER/hram-site
   branch: main
+
+# Русский язык интерфейса
+locale: "ru"
+
+# Локальный режим: когда на компьютере запущен помощник (npm run cms),
+# админка открывается сразу, без экрана входа. На опубликованный сайт
+# эта настройка не влияет — там будет вход через GitHub.
+local_backend: true
 
 # Куда сохраняются загружаемые фотографии
 media_folder: "public/images"
@@ -23,7 +31,7 @@ collections:
     folder: "src/content/services"
     create: true
     delete: true
-    slug: "{{fields.date}}"
+    slug: "{{year}}-{{month}}-{{day}}"
     summary: "{{date}} — {{title}}"
     sortable_fields: [date]
     fields:
@@ -34,12 +42,12 @@ collections:
         date_format: "DD.MM.YYYY"
         time_format: false
       - name: title
-        label: "Заголовок дня (необязательно)"
+        label: "Заголовок дня"
         hint: "Например: «Неделя 5-я по Пятидесятнице»"
         widget: string
         required: false
       - name: note
-        label: "Примечание (необязательно)"
+        label: "Примечание"
         hint: "Например: «Престольный праздник»"
         widget: string
         required: false
@@ -83,7 +91,7 @@ collections:
         widget: text
         required: false
       - name: image
-        label: "Фотография (необязательно)"
+        label: "Фотография"
         widget: image
         required: false
       - name: published
@@ -115,7 +123,7 @@ collections:
         required: false
         hint: "Например: настоятель храма"
       - name: photo
-        label: "Фотография (необязательно)"
+        label: "Фотография"
         widget: image
         required: false
       - name: order
@@ -144,7 +152,7 @@ collections:
         widget: image
         required: false
       - name: caption
-        label: "Подпись (необязательно)"
+        label: "Подпись"
         widget: string
         required: false
       - name: order
@@ -181,7 +189,7 @@ collections:
             label: "Название храма"
             widget: string
           - name: subtitle
-            label: "Подпись под названием (необязательно)"
+            label: "Подпись под названием"
             widget: string
             required: false
           - name: welcome
@@ -205,7 +213,7 @@ collections:
             widget: text
             required: false
           - name: mapEmbed
-            label: "Код карты (вставка iframe, необязательно)"
+            label: "Код карты (вставка iframe)"
             widget: text
             required: false
             hint: "Код вставки с Яндекс.Карт или Google Maps. Добавим на этапе публикации."

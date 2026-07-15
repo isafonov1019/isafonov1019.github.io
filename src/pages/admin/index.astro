@@ -1,8 +1,7 @@
 ---
-// Страница админки (/admin). Загружает Sveltia CMS —
-// сам файл программы и настройки форм лежат в public/admin/.
-// Оформлена как страница Astro, чтобы адрес /admin работал
-// и на локальном сервере, и после публикации.
+// Страница админки (/admin). Загружает Decap CMS с русским интерфейсом.
+// Файлы программы лежат в public/admin/ (self-hosted),
+// формы описаны в public/admin/config.yml.
 ---
 
 <!doctype html>
@@ -13,8 +12,15 @@
     <meta name="robots" content="noindex" />
     <title>Админка сайта храма</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- Явный путь к настройкам форм (страница живёт на /admin без слэша) -->
+    <link href="/admin/config.yml" type="text/yaml" rel="cms-config-url" />
   </head>
   <body>
-    <script src="/admin/sveltia-cms.js" is:inline></script>
+    <script src="/admin/decap-cms.js" is:inline></script>
+    <script src="/admin/decap-cms-ru.js" is:inline></script>
+    <script is:inline>
+      // Включаем русский перевод интерфейса
+      CMS.registerLocale('ru', window.DecapRuLocale);
+    </script>
   </body>
 </html>
