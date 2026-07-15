@@ -1,19 +1,10 @@
 ---
 import OrthodoxCross from './OrthodoxCross.astro';
 import { getEntry } from 'astro:content';
+import { NAV_LINKS as links } from '../data/navigation';
 
 // Название и подпись берём из общих настроек (settings/site.md)
 const site = (await getEntry('settings', 'site'))?.data;
-
-// Пункты меню. Адреса страниц — латиницей (так правильнее для ссылок),
-// названия для людей — по-русски.
-const links = [
-  { href: '/', label: 'Главная' },
-  { href: '/raspisanie', label: 'Расписание' },
-  { href: '/novosti', label: 'Новости' },
-  { href: '/o-hrame', label: 'О храме' },
-  { href: '/kontakty', label: 'Контакты' },
-];
 
 // Подсветка текущего раздела в меню
 const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
@@ -61,10 +52,8 @@ const isActive = (href: string) =>
 </header>
 
 <script>
-  // Помечаем, что JavaScript работает — тогда включается «сворачиваемое» меню.
-  // Если JS выключен, меню остаётся полностью видимым (доступность).
-  document.documentElement.classList.add('js');
-
+  // Класс .js ставится ранним скриптом в BaseLayout —
+  // здесь только логика открытия/закрытия меню.
   const btn = document.querySelector<HTMLButtonElement>('.nav-toggle');
   const nav = document.getElementById('site-nav');
 

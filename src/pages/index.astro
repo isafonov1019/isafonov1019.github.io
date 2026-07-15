@@ -47,16 +47,21 @@ const nextService = nextDay
   <!-- Быстрая информация -->
   <div class="container">
     <div class="info-cards">
-      <div class="card info-card">
+      <div
+        class="card info-card"
+        data-next-service
+        data-date={nextDay ? nextDay.data.date.toISOString().slice(0, 10) : undefined}
+      >
         <h3>Ближайшее богослужение</h3>
         {nextService ? (
-          <p>
+          <p data-next-info>
             <strong>{nextService.date}</strong><br />
             {nextService.first ? `${nextService.first.time} — ${nextService.first.name}` : ''}
           </p>
         ) : (
           <p><span class="placeholder">[УТОЧНИТЬ: расписание]</span></p>
         )}
+        <p data-next-stale hidden>Смотрите актуальное расписание на странице служб.</p>
         <p><a href="/raspisanie">Всё расписание →</a></p>
       </div>
       <div class="card info-card">
@@ -84,4 +89,22 @@ const nextService = nextDay
       </p>
     </div>
   </section>
+
+  <script is:inline>
+    // Если сборка сайта была давно и дата службы прошла —
+    // показываем нейтральный текст вместо устаревшей даты.
+    (function () {
+      var card = document.querySelector('[data-next-service]');
+      if (!card || !card.getAttribute('data-date')) return;
+      var d = new Date();
+      var p = function (n) { return String(n).padStart(2, '0'); };
+      var today = d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate());
+      if (card.getAttribute('data-date') < today) {
+        var info = card.querySelector('[data-next-info]');
+        var stale = card.querySelector('[data-next-stale]');
+        if (info) info.hidden = true;
+        if (stale) stale.hidden = false;
+      }
+    })();
+  </script>
 </BaseLayout>

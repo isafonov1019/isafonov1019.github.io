@@ -15,8 +15,9 @@
   --color-primary-dark: #551620;  /* тёмный бордовый (наведение) */
   --color-primary-light: #8a2b39; /* светлый бордовый */
 
-  --color-accent: #b3892f;        /* золото/охра — акцент */
+  --color-accent: #b3892f;        /* золото/охра — акцент (орнаменты, графика) */
   --color-accent-light: #cda95a;  /* светлое золото */
+  --color-accent-text: #7d5c15;   /* тёмное золото — для ТЕКСТА (контраст ≥ 4.5:1) */
 
   --color-border: #e7ddcd;        /* линии и рамки */
   --color-footer-bg: #3a1319;     /* глубокий бордовый — подвал */
@@ -551,7 +552,7 @@ img { max-width: 100%; height: auto; display: block; }
 .news-card-body { padding: 1.4rem; display: flex; flex-direction: column; gap: 0.5rem; }
 .news-date {
   font-size: 0.9rem;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   font-weight: 700;
   letter-spacing: 0.02em;
 }
@@ -618,7 +619,7 @@ img { max-width: 100%; height: auto; display: block; }
 .clergy-photo-placeholder { color: var(--color-accent); }
 .clergy-photo-placeholder svg { width: 28px; height: 42px; }
 .clergy-info h3 { margin: 0 0 0.15rem; color: var(--color-primary); }
-.clergy-rank { margin: 0 0 0.5rem; color: var(--color-accent); font-weight: 600; }
+.clergy-rank { margin: 0 0 0.5rem; color: var(--color-accent-text); font-weight: 600; }
 .clergy-bio { color: var(--color-text-muted); font-size: 1rem; }
 .clergy-bio p:last-child { margin-bottom: 0; }
 

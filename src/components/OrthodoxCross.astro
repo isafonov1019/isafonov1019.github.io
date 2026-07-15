@@ -1,8 +1,10 @@
 ---
 // Православный восьмиконечный крест — простая аккуратная эмблема.
 // Цвет наследуется от родителя (currentColor), размер задаётся через CSS.
+// Декоративный элемент: скрыт от экранных дикторов (aria-hidden),
+// рядом всегда есть текст.
 ---
-<svg viewBox="0 0 32 48" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Православный крест">
+<svg viewBox="0 0 32 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
   <g fill="currentColor">
     <!-- вертикальный столб -->
     <rect x="14.6" y="2" width="2.8" height="43" rx="0.6" />

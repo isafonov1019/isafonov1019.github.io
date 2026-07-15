@@ -2,9 +2,10 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
 
-// Создаём отдельную страницу для каждой новости
+// Создаём отдельную страницу для каждой опубликованной новости.
+// Скрытые (published: false) не получают страницы вовсе.
 export async function getStaticPaths() {
-  const posts = await getCollection('news');
+  const posts = await getCollection('news', ({ data }) => data.published !== false);
   return posts.map((post) => ({
     params: { slug: post.id },
     props: { post },

@@ -36,7 +36,10 @@ const formatDay = (d: Date) => {
       ) : (
         <div class="schedule">
           {days.map((day) => (
-            <article class="schedule-day card">
+            <article
+              class="schedule-day card"
+              data-date={day.data.date.toISOString().slice(0, 10)}
+            >
               <header class="schedule-day-head">
                 <h2>{formatDay(day.data.date)}</h2>
                 {day.data.title && <p class="schedule-day-title">{day.data.title}</p>}
@@ -56,8 +59,29 @@ const formatDay = (d: Date) => {
               </ul>
             </article>
           ))}
+          <p class="lead" data-schedule-empty hidden>
+            Расписание на ближайшие дни ещё не опубликовано — загляните позже
+            или уточните по телефону храма.
+          </p>
         </div>
       )}
     </div>
   </section>
+
+  <script is:inline>
+    // Сайт собирается заранее, поэтому дополнительно скрываем
+    // прошедшие дни прямо в браузере посетителя.
+    (function () {
+      var d = new Date();
+      var p = function (n) { return String(n).padStart(2, '0'); };
+      var today = d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate());
+      var visible = 0;
+      document.querySelectorAll('.schedule-day[data-date]').forEach(function (el) {
+        if (el.getAttribute('data-date') < today) el.hidden = true;
+        else visible++;
+      });
+      var empty = document.querySelector('[data-schedule-empty]');
+      if (empty && visible === 0) empty.hidden = false;
+    })();
+  </script>
 </BaseLayout>

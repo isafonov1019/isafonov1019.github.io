@@ -35,7 +35,14 @@ const fullTitle = title ? `${title} — ${siteName}` : siteName;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      // Помечаем как можно раньше, что JavaScript работает:
+      // от этого зависит сворачиваемое меню на телефоне.
+      // Без JS меню остаётся полностью видимым.
+      document.documentElement.classList.add('js');
+    </script>
     <meta name="description" content={description} />
+    <meta name="theme-color" content="#6d1f2b" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{fullTitle}</title>
     <!-- Карточка ссылки в мессенджерах и соцсетях -->

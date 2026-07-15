@@ -1,16 +1,9 @@
 ---
 import OrthodoxCross from './OrthodoxCross.astro';
 import { getEntry } from 'astro:content';
+import { NAV_LINKS as links } from '../data/navigation';
 
 const site = (await getEntry('settings', 'site'))?.data;
-
-const links = [
-  { href: '/', label: 'Главная' },
-  { href: '/raspisanie', label: 'Расписание' },
-  { href: '/novosti', label: 'Новости' },
-  { href: '/o-hrame', label: 'О храме' },
-  { href: '/kontakty', label: 'Контакты' },
-];
 
 const year = new Date().getFullYear();
 ---
