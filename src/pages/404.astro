@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import OrthodoxCross from '../components/OrthodoxCross.astro';
+---
+
+<BaseLayout title="Страница не найдена">
+  <section class="section">
+    <div class="container welcome">
+      <span class="hero-emblem"><OrthodoxCross /></span>
+      <h1>Страница не найдена</h1>
+      <div class="ornament"><span></span></div>
+      <p class="lead">
+        Такой страницы на сайте нет — возможно, ссылка устарела
+        или в адресе опечатка.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="/">На главную</a>
+        <a class="btn btn-outline" href="/raspisanie">Расписание богослужений</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

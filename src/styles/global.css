@@ -709,6 +709,33 @@ img { max-width: 100%; height: auto; display: block; }
 }
 
 /* =========================================================
+   ПЕЧАТЬ: расписание удобно распечатать на бумаге
+   ========================================================= */
+@media print {
+  .site-header,
+  .site-footer,
+  .hero-actions,
+  .skip-link,
+  .btn {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+    color: #000;
+    font-size: 12pt;
+  }
+  h1, h2, h3 { color: #000; }
+  .card,
+  .schedule-day {
+    box-shadow: none;
+    border: 1px solid #999;
+    break-inside: avoid;
+  }
+  .service-time { color: #000; }
+  a { color: #000; text-decoration: none; }
+}
+
+/* =========================================================
    ДОСТУПНОСТЬ: меньше анимаций, если пользователь так настроил
    ========================================================= */
 @media (prefers-reduced-motion: reduce) {

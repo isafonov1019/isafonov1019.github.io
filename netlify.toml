@@ -1,0 +1,10 @@
+# Настройки публикации на Netlify.
+# Netlify читает этот файл и понимает, как собирать сайт.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  # Та же версия Node, что и локально
+  NODE_VERSION = "22"
