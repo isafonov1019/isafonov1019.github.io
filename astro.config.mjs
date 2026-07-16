@@ -3,9 +3,8 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  // Адрес сайта. Пока публикации не было — заглушка;
-  // на этапе публикации заменим на настоящий адрес (Netlify).
-  site: 'https://example.netlify.app',
+  // Адрес опубликованного сайта (Netlify)
+  site: 'https://hram-chamerovo.netlify.app',
 
   integrations: [
     // Карта сайта для поисковиков (Яндекс, Google).
