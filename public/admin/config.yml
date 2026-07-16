@@ -6,8 +6,7 @@
 
 backend:
   name: github
-  # [УТОЧНИТЬ: репозиторий на GitHub — заполним на этапе публикации]
-  repo: PLACEHOLDER/hram-site
+  repo: isafonov1019/hram-chamerovo
   branch: main
 
 # Русский язык интерфейса
