@@ -18,7 +18,7 @@
 - **Decap CMS** — админ-панель (`/admin`) с **русским интерфейсом**, чтобы священник сам обновлял расписание и новости. Self-hosted: `public/admin/decap-cms.js` + перевод `decap-cms-ru.js`; формы описаны в `public/admin/config.yml`. Локально: `npm run cms` (decap-server) — вход без пароля; после публикации — вход через GitHub. (Sveltia отклонена: нет русского интерфейса)
 - Контент хранится в Markdown-файлах в `src/content/` (схемы — в `src/content.config.ts`)
 - Общие данные храма (название, контакты, реквизиты) — в одном файле `src/content/settings/site.md`, подставляются по всему сайту
-- Хостинг: Netlify (бесплатный тариф); вход в админку — через GitHub (настроим на этапе публикации)
+- Хостинг: **GitHub Pages** (isafonov1019.github.io) — выбран после замеров: Netlify из РФ отвечал ~5 с, GitHub Pages ~1,6 с. Публикация — через GitHub Actions (`.github/workflows/deploy.yml`). Netlify (hram-chamerovo.netlify.app) остаётся запасной копией и OAuth-шлюзом для входа в админку (`base_url`/`site_domain` в config.yml)
 - Стили: обычный CSS (дизайн-система в `src/styles/global.css`) + шрифты PT Serif/PT Sans через Fontsource — Илья разрешил лёгкие библиотеки для дизайна
 
 ## О пользователе (Илья)

@@ -6,8 +6,12 @@
 
 backend:
   name: github
-  repo: isafonov1019/hram-chamerovo
+  repo: isafonov1019/isafonov1019.github.io
   branch: main
+  # Вход в админку проводится через Netlify (см. настройку OAuth):
+  # сам сайт живёт на GitHub Pages, но «швейцаром» служит Netlify
+  base_url: https://api.netlify.com
+  site_domain: hram-chamerovo.netlify.app
 
 # Русский язык интерфейса
 locale: "ru"

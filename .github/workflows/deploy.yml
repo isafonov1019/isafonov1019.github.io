@@ -1,0 +1,50 @@
+# Автопубликация: при каждом изменении в main GitHub сам собирает
+# сайт и выкладывает его на GitHub Pages (isafonov1019.github.io).
+name: Публикация сайта
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # запуск вручную из вкладки Actions
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Сборка
+    runs-on: ubuntu-latest
+    steps:
+      - name: Получить код
+        uses: actions/checkout@v4
+      - name: Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Установить зависимости
+        run: npm ci
+      - name: Собрать сайт
+        run: npm run build
+      - name: Подготовить к выкладке
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    name: Выкладка
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Опубликовать на GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

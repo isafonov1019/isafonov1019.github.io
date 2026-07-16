@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin
 
-Sitemap: https://hram-chamerovo.netlify.app/sitemap-index.xml
+Sitemap: https://isafonov1019.github.io/sitemap-index.xml

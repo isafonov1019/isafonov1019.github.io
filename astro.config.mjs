@@ -3,8 +3,9 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  // Адрес опубликованного сайта (Netlify)
-  site: 'https://hram-chamerovo.netlify.app',
+  // Адрес опубликованного сайта (GitHub Pages — быстрый доступ из РФ).
+  // Запасная копия остаётся на Netlify: hram-chamerovo.netlify.app
+  site: 'https://isafonov1019.github.io',
 
   // Все адреса — с косой чертой в конце (как отдаёт хостинг).
   // Без этого каждый переход по ссылке делал лишний редирект.
