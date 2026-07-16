@@ -8,3 +8,17 @@
 [build.environment]
   # Та же версия Node, что и локально
   NODE_VERSION = "22"
+
+# Стили, скрипты и шрифты Astro имеют уникальные имена файлов —
+# их можно кэшировать в браузере навсегда: повторные заходы мгновенны.
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Базовые заголовки безопасности для всего сайта
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
