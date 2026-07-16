@@ -227,14 +227,6 @@ img { max-width: 100%; height: auto; display: block; }
   top: 0;
   z-index: 50;
 }
-/* Тонкая золотая полоса сверху — акцент */
-.site-header::before {
-  content: "";
-  display: block;
-  height: 4px;
-  background: linear-gradient(90deg, var(--color-primary), var(--color-accent), var(--color-primary));
-}
-
 .header-inner {
   display: flex;
   align-items: center;
