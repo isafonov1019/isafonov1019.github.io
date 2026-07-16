@@ -27,7 +27,7 @@ const dateFmt = new Intl.DateTimeFormat('ru-RU', {
           {posts.map((post) => (
             <article class="news-card card">
               {post.data.image && (
-                <a href={`/novosti/${post.id}`} class="news-card-image">
+                <a href={`/novosti/${post.id}/`} class="news-card-image">
                   <img src={post.data.image} alt={post.data.title} loading="lazy" />
                 </a>
               )}
@@ -36,10 +36,10 @@ const dateFmt = new Intl.DateTimeFormat('ru-RU', {
                   {dateFmt.format(post.data.date)}
                 </time>
                 <h2 class="news-card-title">
-                  <a href={`/novosti/${post.id}`}>{post.data.title}</a>
+                  <a href={`/novosti/${post.id}/`}>{post.data.title}</a>
                 </h2>
                 {post.data.summary && <p class="news-summary">{post.data.summary}</p>}
-                <a class="news-more" href={`/novosti/${post.id}`}>Читать полностью →</a>
+                <a class="news-more" href={`/novosti/${post.id}/`}>Читать полностью →</a>
               </div>
             </article>
           ))}

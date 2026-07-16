@@ -6,10 +6,15 @@ import { NAV_LINKS as links } from '../data/navigation';
 // Название и подпись берём из общих настроек (settings/site.md)
 const site = (await getEntry('settings', 'site'))?.data;
 
-// Подсветка текущего раздела в меню
-const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
-const isActive = (href: string) =>
-  href === '/' ? path === '/' : path === href || path.startsWith(href + '/');
+// Подсветка текущего раздела в меню.
+// Сравниваем адреса без косой черты в конце, чтобы /novosti/
+// и /novosti/moya-novost/ оба подсвечивали раздел «Новости».
+const norm = (s: string) => s.replace(/\/+$/, '') || '/';
+const path = norm(Astro.url.pathname);
+const isActive = (href: string) => {
+  const h = norm(href);
+  return h === '/' ? path === '/' : path === h || path.startsWith(h + '/');
+};
 ---
 
 <header class="site-header">
